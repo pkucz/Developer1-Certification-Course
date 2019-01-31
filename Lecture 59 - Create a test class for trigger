@@ -1,0 +1,71 @@
+// Lecture 59 - Create a test class for trigger
+
+// Trigger
+trigger CustomerTrigger on APEX_Customer__c (after update) 
+{
+    CustomerTriggerHelper.createInvoiceRecords(Trigger.new,trigger.oldMap);
+}
+
+//Helper Class
+public class CustomerTriggerHelper{
+
+public static void createInvoiceRecords(List<apex_customer__c> customerList,
+Map<id,apex_customer__c>oldMapCustomer)
+{
+ List<apex_invoice__c> invoiceList = new List<apex_invoice__c>();
+    for(apex_customer__c objCustomer:customerList)
+    {
+        if(objCustomer.apex_customer_status__c == 'Active' &&
+        oldMapCustomer.get(objCustomer.id).apex_customer_status__c == 'Inactive')
+        {
+        apex_invoice__c objInvoice=new apex_invoice__c();
+        objInvoice.apex_status__c='Pending';
+        objInvoice.apex_description__c = 'New Invoice';
+        objInvoice.apex_customer__c=objCustomer.id;
+        invoiceList.add(objInvoice);
+        }
+    }
+    insert invoiceList;    
+}
+}
+
+//Test Class
+@isTest
+private class CustomerTriggerTestClass
+{
+    static testMethod void myUnitTest()
+    {
+        //create the data
+        apex_customer__c objCust = new apex_customer__c();
+        objCust.Name='Test Customer';
+        objCust.apex_customer_status__c='Inactive';
+        insert objCust;
+        
+        Test.startTest();
+        objCust.apex_customer_status__c='Active';
+        update objCust; //trigger will fire
+        test.stopTest();
+        
+        // see if expected result is equal to actual result
+        List<apex_invoice__c> invList=[select id,apex_customer__c from apex_invoice__c where apex_customer__c=:objCust.id];
+        System.assertEquals(1,invList.size());
+    }
+    
+    static testMethod void myUnitTest2()
+    {
+        //create the data
+        apex_customer__c objCust = new apex_customer__c();
+        objCust.Name='Test Customer';
+        objCust.apex_customer_status__c='Inactive';
+        insert objCust;
+        
+        Test.startTest();
+        objCust.apex_customer_status__c='Pending';
+        update objCust; //trigger will fire
+        test.stopTest();
+        
+        // see if expected result is equal to actual result
+        List<apex_invoice__c> invList=[select id,apex_customer__c from apex_invoice__c where apex_customer__c=:objCust.id];
+        System.assertEquals(0,invList.size());
+    }
+}
