@@ -1,0 +1,7 @@
+<apex:page >
+  <!-- Begin Default Content REMOVE THIS -->
+  <h1>Congratulations MyTutorialRack</h1>
+  This is your new Page: apexpageexample
+  <!-- End Default Content REMOVE THIS -->
+</apex:page>
+             
