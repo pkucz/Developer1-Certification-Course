@@ -1,0 +1,7 @@
+<apex:page >
+   <apex:panelBar >
+      <apex:panelbarItem label="Item1" onenter="alert('Entering Item 1');" onleave="alert('Leaving Item 1');">MyTutorialRack website</apex:panelbarItem>
+      <apex:panelbarItem label="Item2" onenter="alert('Entering Item 2');" onleave="alert('Leaving Item 2');">https://mytutorialrack.com/</apex:panelbarItem>
+   
+   </apex:panelBar>
+</apex:page>
