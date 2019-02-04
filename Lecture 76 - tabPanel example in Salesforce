@@ -1,0 +1,6 @@
+<apex:page id="thePage" >
+   <apex:tabPanel switchType="client">
+      <apex:tab label="Home" name="home1" id="tabOne">Apex is official programming language for Salesforce Developers. It is strongly typed object-oriented programming language.</apex:tab>
+      <apex:tab label="Students" name="students1" id="tabTwo">In this blog post,we will take a look at different types of access modifiers which are available in Apex programming. </apex:tab>
+      </apex:tabPanel>
+</apex:page>
