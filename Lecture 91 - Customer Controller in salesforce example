@@ -1,0 +1,42 @@
+// VF Page
+<apex:page controller="NewAndExistingController">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection >
+                <apex:inputField value="{!account.name}"/>
+                <apex:inputField value="{!account.phone}"/>
+                <apex:inputField value="{!account.industry}"/>
+            </apex:pageBlockSection>
+            <apex:pageBlockButtons >
+                <apex:commandButton value="Save" action="{!save}"/>
+            </apex:pageBlockButtons>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
+
+
+// Customer Controller Class
+public class NewAndExistingController {
+
+    public Account account { get; set; }
+    
+    public NewAndExistingController(){
+    
+    Id id=ApexPages.currentPage().getParameters().get('id');
+    account=(id==null)?new Account():[select name,phone,industry from Account where Id=:id];
+    }
+    
+    public PageReference save()
+    {
+        try{
+            upsert(account);
+        }
+        catch(System.DMLException e)
+        {
+            ApexPages.addMessages(e);
+            return null;
+        }
+        PageReference redirectSuccess = new ApexPages.StandardController(Account).view();
+        return redirectSuccess;
+    }
+}
