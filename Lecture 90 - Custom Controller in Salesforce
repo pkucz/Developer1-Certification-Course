@@ -1,0 +1,27 @@
+//Visualforce Page
+<apex:page controller="AccountCustomController">
+    <apex:form >
+        <apex:pageBlock title="Congratulations {!$User.FirstName}">
+            You belong to the Account Name: <apex:inputField value="{!account.name}"/>
+            <apex:commandButton action="{!savetheRecord}" value="Save"/>
+        </apex:pageBlock>
+    </apex:form>
+</apex:page>
+
+
+//Custom Controller Class
+public class AccountCustomController {
+
+    public PageReference savetheRecord() {
+        update account;
+        return null;
+    }
+    private final Account account;
+    public AccountCustomController()
+    {
+        account=[select id,name,site from Account where Id=: ApexPages.currentPage().getParameters().get('id')];
+    }
+    public Account getAccount(){
+        return account;
+    }
+}
