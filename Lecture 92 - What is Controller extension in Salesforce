@@ -1,0 +1,21 @@
+// Visualforce Page
+<apex:page standardController="Account" extensions="myControllerExtension">
+    {!greeting}
+    <apex:form >
+        <apex:inputField value="{!account.name}"/>
+        <apex:commandButton value="Save" action="{!save}"/>
+    </apex:form>
+</apex:page>
+
+
+// Controller extension class
+public class myControllerExtension {
+
+    private final Account acct;
+    public myControllerExtension(ApexPages.StandardController stdcontroller) {
+        this.acct=(Account)stdcontroller.getRecord();
+    }
+    public String getGreeting(){
+        return 'hello '+acct.name + '(' +acct.id+ ')';
+    }
+}
