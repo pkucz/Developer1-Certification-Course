@@ -12,15 +12,22 @@
 //Custom Controller Class
 public class AccountCustomController {
 
+    // Custom Save method
     public PageReference savetheRecord() {
         update account;
         return null;
     }
+    
+    //Define variable called account
     private final Account account;
+    
+    //Constructor method - executes automatically when class is instantiated
     public AccountCustomController()
     {
         account=[select id,name,site from Account where Id=: ApexPages.currentPage().getParameters().get('id')];
     }
+    
+    //Getter method called by inputField on VF page
     public Account getAccount(){
         return account;
     }
