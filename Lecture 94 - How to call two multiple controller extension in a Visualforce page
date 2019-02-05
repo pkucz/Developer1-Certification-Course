@@ -1,0 +1,26 @@
+//Visualforce Page
+<apex:page standardController="Account" extensions="ExtOne,ExtTwo">
+    <apex:outputText value="{!foo}"/>
+</apex:page>
+
+
+//Extension Class #1
+public class ExtOne
+{
+    public ExtOne(ApexPages.StandardController controller) {
+    }
+    public String getFoo(){
+        return 'foo-one';
+    }
+}
+
+
+Extension Class #2
+public class ExtTwo
+{
+    public ExtTwo(ApexPages.StandardController controller) {
+    }
+    public String getFoo(){
+        return 'foo-two';
+    }
+}
