@@ -1,0 +1,8 @@
+Schema.DescribeSObjectResult describeResult=Account.SObjecttype.getDescribe();
+//System.debug('Describe info for the account '+describeResult);
+List<Schema.ChildRelationship> lstofChildRel=describeResult.getChildRelationships();
+for(Schema.ChildRelationship rel:lstofChildRel)
+{
+    if(rel.getRelationshipName()!=null)
+        System.debug('RelationshipName '+rel.getRelationshipName());
+}
