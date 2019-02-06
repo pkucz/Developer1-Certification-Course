@@ -1,0 +1,28 @@
+// Visualforce Page
+<apex:page controller="accountlistcontr">
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!accounts}" var="ac">
+            <apex:column value="{!ac.Name}"/>
+            <apex:column value="{!ac.AccountNumber}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
+
+
+//Custom List Controller Apex Class
+public class accountlistcontr {
+
+    public ApexPages.StandardSetController acct{
+    get{
+        if (acct==null)
+        {
+            acct = new ApexPages.StandardSetController(Database.getQueryLocator([Select name,accountNumber from Account]));
+        }
+        return acct;
+    }
+    set;
+    }
+    public List<Account> getAccounts() {
+        return (List<Account>) acct.GetRecords();
+    }
+}
