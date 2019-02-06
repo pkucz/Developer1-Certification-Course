@@ -1,0 +1,27 @@
+//VF page
+<apex:page controller="RetrievePickListData">
+    <apex:form >
+        <apex:outputLabel value="Stage "/>
+        <apex:selectList size="1">
+            <apex:selectOptions value="{!pickNames}"></apex:selectOptions>
+        
+        </apex:selectList>
+    </apex:form>
+</apex:page>
+
+
+//APEX Class
+public class RetrievePickListData {
+
+    public List<SelectOption> getpickNames()
+    {
+        List<SelectOption> options = new List<SelectOption>();
+            Schema.DescribeFieldResult fieldResult=Schema.SObjectType.Opportunity.fields.StageName.getSobjectField().getDescribe();
+            options.add(new SelectOption('--None--','--None--'));
+        for(PicklistEntry ent:FieldResult.getPicklistValues())
+        {
+            options.add(new SelectOption(ent.getValue(),ent.getLabel()));
+        }
+            return options;
+    }
+}
