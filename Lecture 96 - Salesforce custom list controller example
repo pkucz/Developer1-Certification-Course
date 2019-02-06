@@ -1,1 +1,29 @@
-Visualforce 
+//Visualforce Page
+<apex:page controller="OpportunityListCont">
+    <apex:pageBlock >
+        <apex:pageBlockTable value="{!opportunities}" var="o">
+            <apex:column value="{!o.Name}"/>
+            <apex:column value="{!o.CloseDate}"/>
+            <apex:column value="{!o.Amount}"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+</apex:page>
+
+
+//Custom List Controller APEX Class
+public class OpportunityListCont {
+
+    // Need to instanciate the standard set controller for custom list controller
+    public ApexPages.StandardSetController opps{
+    get{
+         if(opps==null){
+             opps=new ApexPages.StandardSetController(Database.getQueryLocator([Select Name,CloseDate,Amount from Opportunity]));
+         }
+    return opps;  
+    }
+    set;
+    }
+    public List<Opportunity> getOpportunities() {
+        return (List<Opportunity>)opps.GetRecords();
+    }
+}
