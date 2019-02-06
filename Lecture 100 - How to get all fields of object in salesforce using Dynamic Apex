@@ -1,0 +1,7 @@
+//Account
+Schema.DescribeSObjectResult acc_desc = Account.SObjectType.getDescribe();
+Map<String,Schema.SObjectField> acc_fields= acc_desc.fields.getMap();
+for(Schema.SObjectField fld :acc_fields.values())
+{
+    System.debug('Field '+fld);
+}
