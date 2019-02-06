@@ -1,0 +1,17 @@
+Map<String,Schema.SObjectType> m =schema.getGlobalDescribe();
+System.debug('Map Contains' +m);
+Schema.SObjectType s=m.get('Account');
+Schema.DescribeSObjectResult descAccount = s.getDescribe();
+System.debug('Describe for Account '+descAccount);
+Map<String,Schema.SObjectField> fields=	descAccount.fields.getMap();
+System.debug('fields of the object ' +fields);
+List<String> listRequiredFields = new List<String>();
+for(String f:fields.KeySet())
+{
+    Schema.DescribeFieldResult describeField=fields.get(f).getDescribe();
+    if(describeField.isCreateable() && !describeField.isNillable()&&!describeField.isDefaultedOnCreate())
+    {
+        listRequiredFields.add(f);
+    }
+}
+System.debug('Required Fields for the Object '+listRequiredFields);
