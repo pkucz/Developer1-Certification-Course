@@ -1,0 +1,15 @@
+List<Schema.DescribeTabSetResult> tabSetDesc = Schema.describeTabs();
+//System.debug('tabSetDesc '+tabSetDesc);
+for(Schema.DescribeTabSetResult tsr:tabSetDesc)
+{
+    String appLabel=tsr.getLabel();
+    if(appLabel=='Sales')
+    {
+        List<Schema.DescribeTabResult> tabDesc = tsr.getTabs();
+        System.debug('--Tab associated with Sales Application ----');
+        For(Schema.DescribeTabResult tab:tabDesc)
+        {
+            system.debug('Label '+tab.getLabel());
+        }
+    }
+}
