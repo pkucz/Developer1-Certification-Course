@@ -1,0 +1,27 @@
+//Visualforce Page
+// Name = ObjectRetrieveExample.vfp
+
+<apex:page controller="ObjectRetrieveData" >
+    <apex:form>
+        <apex:outputLabel value="All Objects"/>
+        <apex:selectList size="1">
+        	<apex:selectOptions value="{!objNames}"></apex:selectOptions>
+        </apex:selectList>
+    </apex:form>
+</apex:page>
+
+
+// APEX Controller Class
+public class ObjectRetrieveData {
+    public List<SelectOption> getObjNames()
+    {
+        List<SelectOption> options=New List<SelectOption>();
+        options.add(new SelectOption('None','None'));
+        List<Schema.SObjectType> globalDesc=Schema.getGlobalDescribe().Values();
+        for(Schema.SObjectType objType:globalDesc)
+        {
+            options.add(new SelectOption(objType.getDescribe().getName(),objType.getDescribe().getName()));
+        }
+        return options;
+    }
+}
